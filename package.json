@@ -1,0 +1,15 @@
+{
+  "name": "create-topic",
+  "version": "1.0.0",
+  "description": "Sample Choice Create Service",
+  "main": "handler.js",
+  "scripts": {
+  },
+  "author": "Viswanath Lekshmanan",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "3.5.0",
+    "lodash": "4.17.4",
+    "uuid": "3.0.1"
+  }
+}

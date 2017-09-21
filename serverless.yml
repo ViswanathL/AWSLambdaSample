@@ -1,0 +1,58 @@
+service: Choice
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  profile: Personal
+  region: us-east-1
+  environment:
+    DYNAMODB_TABLE: choice
+  role: {YOUR_AWS_ROLE}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+functions:
+  create:
+    name: Choice-Create-${self:provider.stage}
+    handler: choice/create.create
+    events:
+      - http:
+          path: choice
+          method: post
+          cors: true
+
+  list:
+    name: Choice-List-${self:provider.stage}
+    handler: choice/list.list
+    events:
+      - http:
+          path: choice
+          method: get
+          cors: true
+
+  get:
+    name: Choice-Get-${self:provider.stage}
+    handler: choice/get.get
+    events:
+      - http:
+          path: choice/{id}
+          method: get
+          cors: true
+
+  update:
+    name: Choice-Update-${self:provider.stage}
+    handler: choice/update.update
+    events:
+      - http:
+          path: choice/{id}
+          method: put
+          cors: true
